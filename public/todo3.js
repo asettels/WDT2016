@@ -15,7 +15,7 @@ function ToDo(id, task,date, time, important,note){
 
 	this.makeElement = function(onDelete, onEdit){
 		//make list
-		var $li = $('<li></li>').attr('id', 'task_' + self.id);	
+		var $li = $('<li></li>').attr('id', 'task_' + self.id);
 		var $cb = $('<input type = "checkbox">');
 		$cb.change(function(){
 			self.done=($(this).is(":checked"));
@@ -30,6 +30,8 @@ function ToDo(id, task,date, time, important,note){
 		});
 		var $edit = $('<button>Edit</button>');
 		$edit.click(function(){
+			document.getElementById("editTask").style.display = "block";
+			document.getElementById("newTask").style.display = "none";
 			onEdit(self);
 		});
 		//fill list with checkbox, task, date, time
@@ -38,8 +40,8 @@ function ToDo(id, task,date, time, important,note){
 
 		if(self.note){
 			$note.text("Note: " + self.note);
-		}			
-		
+		}
+
 		return $li;
 	}
 
@@ -88,7 +90,7 @@ function ToDoList(){
 }
 
 $(function(){
-	var list = new ToDoList(); 
+	var list = new ToDoList();
 	var newId = 1;
 
 	$('#newToDo').submit(function(event){
@@ -102,6 +104,9 @@ $(function(){
 	});
 
 	$('#editTodo').submit(function(event){
+		document.getElementById("editTask").style.display = "none";
+		document.getElementById("newTask").style.display = "block";
+
 		event.preventDefault();
 		var data = new FormData(this);
 		var id = data.get("id");
