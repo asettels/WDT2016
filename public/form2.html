@@ -19,19 +19,34 @@
 
 <section class="form">
     <h2>Make new todo</h2>
-    <form id="newToDo" action="#">
-        <input type="text" name="task" placeholder="What do you want to do loo">
-        <input type="date" name="date">
-        <input type="time" name="time"><br>
-        <input type="checkbox" name="important">
+    <form id="newToDo" action="#" name="newToDo">
+        <input id ="create_input_task" type="text" name="task" placeholder="What do you want to do loo">
+        <input id ="create_input_date" type="date" name="date">
+        <input id ="create_input_time" type="time" name="time"><br>
+        <input id ="create_input_important" type="checkbox" name="important">
         <span> Important</span><br>
         <span> Note: </span>
-        <input type="text" name="note"><br>
+        <input id ="create_input_note" type="text" name="note"><br>
         <input type="submit" value="Save task">
     </form>
 </section>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<section class="edit">
+    <h2>Edit todo</h2>
+    <form id="editTodo" action="#" name="editTodo">
+        <input id ="edit_input_task" type="text" name="task" placeholder="What do you want to do loo">
+        <input id ="edit_input_date" type="date" name="date">
+        <input id ="edit_input_time" type="time" name="time"><br>
+        <input id ="edit_input_important" type="checkbox" name="important">
+        <span> Important</span><br>
+        <span> Note: </span>
+        <input id ="edit_input_note" type="text" name="note"><br>
+        <input type="submit" value="Save changes">
+        <input id="edit_input_id" type="hidden" name="id">
+    </form>
+</section>
+
+    <script src="jquery-3.1.1.js"></script>
     <script type="text/javascript" src="todo3.js"></script>
 </body>
 </html>
