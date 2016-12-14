@@ -1,0 +1,81 @@
+body{
+	font-family: Gotham, Helvetica Neue, Helvetica, Arial," sans-serif";
+	text-align: center;
+}
+
+@keyframes slogan {
+    0%		{
+			font-size:auto;
+		}
+    50%	{
+		font-size: 45px;
+	}
+	100%{
+
+	}
+}
+
+@keyframes splashbuttonhover{
+	0%{}
+	100%{
+		box-shadow: 10px 10px 5px grey;
+	}
+}
+
+p:hover{
+	animation: slogan;
+	animation-duration: 0.5s;
+}
+
+.top{
+	position: static;;
+	margin:0 auto;
+	width:50%;
+}
+
+.container{
+	width:1000px;
+	height: 1000px;
+	margin: 0 auto;
+}
+
+input[type=submit] {
+	color: white;
+    background-color: #466BA1;/*Blue from logo */
+    border: 0;
+	border-radius: 5px;
+	margin:5px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.splashbutton{
+	padding:100px 100px;
+	margin-top: 1350px;
+
+}
+
+.splashbutton:hover{
+	animation: splashbuttonhover;
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+}
+
+.splashbutton:active{
+	color:black;
+	background-color: white;
+}
+
+button{
+	color:white;
+	background-color: #466BA1;/*Blue from logo */
+    border: 0;
+	border-radius: 3px;
+	margin:2px;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 10px;
+}
