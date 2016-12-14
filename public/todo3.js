@@ -65,6 +65,7 @@ function ToDoList(){
 		self.tasks.push(newToDo);
 		var $ul = $('#list1');
 		$ul.append(newToDo.makeElement(self.delete, self.edit));
+		console.log(JSON.stringify(newToDo));
 	}
 	self.delete = function(todoloo){
 		var index = self.tasks.indexOf(todoloo);

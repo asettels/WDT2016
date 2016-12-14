@@ -8,14 +8,22 @@ function send404Response(res){
 	res.end();
 }
 
+var routes = {
+	"/":["text/html","form2.html"],
+	"/style.css":["text/css","style.css"],
+	"/todo3.js":["text/javascript","todo3.js"],
+	"/jquery-3.1.1.js":["text/javascript","jquery-3.1.1.js"],
+	"/media/logo.png":["image/png","media/logo.png"]
+}
+
 function onRequest(req,res){
-	if(req.method == 'GET' && req.url == '/'){
-		res.writeHead(200, {"Content-Type":"text/html"});
-		fs.createReadStream(base+"form2.html").pipe(res);
+	if(req.method == 'GET' && routes[req.url]){
+		res.writeHead(200, {"Content-Type":routes[req.url][0]});
+		fs.createReadStream(base+routes[req.url][1]).pipe(res);
 	}else{
 		send404Response(res);
 	}
 }
 
-http.createServer(onRequest).listen(8000);
+http.createServer(onRequest).listen(8080);
 console.log("Server is now running");
