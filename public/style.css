@@ -33,13 +33,17 @@ header, section{
 margin: 2%;
 }
 
-.form, .list{
+.form, .list, .edit{
 	box-sizing: border-box;
 	float:left;
 	width:40%;
 	padding-left: 1%;
 	border:1px solid #95989A;
 	border-radius: 5px;
+}
+
+ul{
+	list-style-type: none;
 }
 
 .done{
