@@ -1,3 +1,4 @@
+
 function ToDo(id, task,date, time, important,note){
 	var self = this;
 	this.done=false;
@@ -22,7 +23,7 @@ function ToDo(id, task,date, time, important,note){
 			$li.toggleClass("done",self.done);
 		});
 		var $span = $('<span></span>').text(self.task + ", " + self.date +  ", " + self.time);
-		$li.toggleClass("important",self.important==='on');
+		$li.toggleClass("important",self.important);
 		var $button = $('<button>Delete</button>');
 		$button.click(function(){
 			$li.remove();
@@ -30,8 +31,6 @@ function ToDo(id, task,date, time, important,note){
 		});
 		var $edit = $('<button>Edit</button>');
 		$edit.click(function(){
-			document.getElementById("editTask").style.display = "block";
-			document.getElementById("newTask").style.display = "none";
 			onEdit(self);
 		});
 		//fill list with checkbox, task, date, time
@@ -75,9 +74,10 @@ function ToDoList(){
 		$('#edit_input_task').val(todo.task);
 		$('#edit_input_date').val(todo.date);
 		$('#edit_input_time').val(todo.time);
-		$('#edit_input_important').val(todo.important);
+		$('#edit_input_important').attr('checked', todo.important);
 		$('#edit_input_note').val(todo.note);
 		$('#edit_input_id').val(todo.id);
+		$('#newTask').hide(300,function(){$('#editTask').show(300)});
 	}
 
 	self.find = function(id){
@@ -96,7 +96,7 @@ $(function(){
 	$('#newToDo').submit(function(event){
 		event.preventDefault();
 		var data = new FormData(this);
-		var todo = new ToDo(newId, data.get("task"), data.get("date"), data.get("time"), data.get("important"), data.get("note"));
+		var todo = new ToDo(newId, data.get("task"), data.get("date"), data.get("time"), data.get("important")==='on', data.get("note"));
 		newId++;
 		list.add(todo);
 		// same as document.getElementById('newToDo').reset()
@@ -104,14 +104,18 @@ $(function(){
 	});
 
 	$('#editTodo').submit(function(event){
-		document.getElementById("editTask").style.display = "none";
-		document.getElementById("newTask").style.display = "block";
+		$('#editTask').hide(300,function(){$('#newTask').show(300)});
 
 		event.preventDefault();
 		var data = new FormData(this);
 		var id = data.get("id");
 		var todo = list.find(id);
-		todo.update(data.get("task"), data.get("date"), data.get("time"), data.get("important"), data.get("note"));
+		todo.update(data.get("task"), data.get("date"), data.get("time"), data.get("important")==='on', data.get("note"));
 		$('#editTodo')[0].reset();
+	});
+
+	$('#edit_cancel').click(function(event){
+		$('#editTodo')[0].reset();
+		$('#editTask').hide(300,function(){$('#newTask').show(300)});
 	});
 });
