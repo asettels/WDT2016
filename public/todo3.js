@@ -67,20 +67,7 @@ function ToDoList(){
 		// var json = JSON.stringify(self.tasks);
 		// $.post("/addTodo", json);
 
-		$.post({
-			url: '/addTodo',
-			data: {
-				id : newToDo.id,
-				task : newToDo.task,
-				date : newToDo.time,
-				important: newToDo.important,
-				note : newToDo.note
-			},
-			dataType: 'json'
-		}).fail(function (err) {
-			console.log('er gaat iets fout!');
-			console.err(err);
-		});
+	
 	}
 	self.delete = function(todoloo){
 		var index = self.tasks.indexOf(todoloo);
@@ -114,11 +101,28 @@ $(function(){
 	$('#newToDo').submit(function(event){
 		event.preventDefault();
 		var data = new FormData(this);
+
 		var todo = new ToDo(newId, data.get("task"), data.get("date"), data.get("time"), data.get("important")==='on', data.get("note"));
+		
+		$.post({
+			url: '/addTodo',
+			data: {
+				"id": newId,
+				"task" : data.get("task"),
+				"date" : data.get("time"),
+				"important": data.get("important")==='on',
+				"note" : data.get("note")
+			},
+			dataType: 'json'
+		}).fail(function (err) {
+			console.log('er gaat iets fout!');
+			console.log(err);
+		});
+
 		newId++;
 		list.add(todo);
-		// same as document.getElementById('newToDo').reset()
 		$('#newToDo')[0].reset();
+		$.post('/addTodo', data);
 	});
 
 	$('#editTodo').submit(function(event){

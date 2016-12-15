@@ -10,6 +10,8 @@ app.use(express.static(base));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var todos = [];
+
 function send404Response(res){
 	res.writeHead(404, {"Content-Type":"text/plain"});
 	res.write("Error 404: Page not found!");
@@ -35,17 +37,17 @@ function onRequest(req,res){
 }
 
 app.post("/addTodo", function (request, response) {
-
+	console.log("starting the serverwork!");
 	var id = request.body.id;
-	console.log(request.body.id);
 	var task = request.body.task;
 	var date = request.body.date;
 	var time = request.body.time;
 	var important = request.body.important;
 	var note = request.body.note;
+	console.log(request.body);
 
-	res.send(id,task,date,time,important,note);
-});
+	todos.push(request.body);
+	});
 
 var todosText = base + "todos.json";
 
