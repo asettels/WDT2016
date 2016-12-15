@@ -1,10 +1,14 @@
 var http = require('http');
 var fs = require('fs');
 var express = require('express');
-var base = "./Documents/WDT2016/public/"
+var url = require('url');
+var base = ("./Documents/WDT2016/public/");
 var app = express();
+var bodyParser = require("body-parser");
 
-app.use(express.static(base))
+app.use(express.static(base));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 function send404Response(res){
 	res.writeHead(404, {"Content-Type":"text/plain"});
@@ -29,5 +33,17 @@ function onRequest(req,res){
 	}
 }
 
+app.get("/todos", function (req, res) {
+	console.log("todos requested!");
+	res.json(todos);
+});
+
+var todosText = base + "todos.txt"
+
+fs.watch(todosText, function () {
+	console.log("File changed!");
+});
+
 http.createServer(app).listen(8080);
 console.log("Server is now running");
+console.log("Now watching" + todosText);
