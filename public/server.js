@@ -1,6 +1,10 @@
 var http = require('http');
 var fs = require('fs');
+var express = require('express');
 var base = "./Documents/WDT2016/public/"
+var app = express();
+
+app.use(express.static(base))
 
 function send404Response(res){
 	res.writeHead(404, {"Content-Type":"text/plain"});
@@ -25,5 +29,5 @@ function onRequest(req,res){
 	}
 }
 
-http.createServer(onRequest).listen(8080);
+http.createServer(app).listen(8080);
 console.log("Server is now running");
