@@ -1,4 +1,3 @@
-
 function ToDo(id, task,date, time, important,note){
 	var self = this;
 	this.done=false;
@@ -65,7 +64,23 @@ function ToDoList(){
 		self.tasks.push(newToDo);
 		var $ul = $('#list1');
 		$ul.append(newToDo.makeElement(self.delete, self.edit));
-		console.log(JSON.stringify(newToDo));
+		// var json = JSON.stringify(self.tasks);
+		// $.post("/addTodo", json);
+
+		$.post({
+			url: '/addTodo',
+			data: {
+				id : newToDo.id,
+				task : newToDo.task,
+				date : newToDo.time,
+				important: newToDo.important,
+				note : newToDo.note
+			},
+			dataType: 'json'
+		}).fail(function (err) {
+			console.log('er gaat iets fout!');
+			console.err(err);
+		});
 	}
 	self.delete = function(todoloo){
 		var index = self.tasks.indexOf(todoloo);
@@ -90,9 +105,11 @@ function ToDoList(){
 	}
 }
 
+
 $(function(){
 	var list = new ToDoList();
-	var newId = 1;
+	var newId = 1,
+		listToClear = $("#list1");
 
 	$('#newToDo').submit(function(event){
 		event.preventDefault();
@@ -119,4 +136,32 @@ $(function(){
 		$('#editTodo')[0].reset();
 		$('#editTask').hide(300,function(){$('#newTask').show(300)});
 	});
+
+	function clearList(){
+		list.tasks = [];
+		listToClear.html("");
+	}
+
+	var fetchTodos = function(){
+		$.ajax({
+			url: "/todos.json",
+			dataType: "json"
+		}).done(function(data){
+			console.log(data);
+			clearList();
+			data.forEach(function (todo) {
+				list.add(new ToDo(todo["id"], todo["task"], todo["date"], todo["time"], todo["important"]==='on', todo["note"]));
+			});
+		})
+	};
+
+	$(document).ready(function(){
+	// var list = $("#list1"); //get list element
+	if(undefined!==list){
+		fetchTodos();
+		setInterval(fetchTodos, 5000);
+	}
 });
+
+});
+

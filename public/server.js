@@ -21,7 +21,8 @@ var routes = {
 	"/style.css":["text/css","style.css"],
 	"/todo3.js":["text/javascript","todo3.js"],
 	"/jquery-3.1.1.js":["text/javascript","jquery-3.1.1.js"],
-	"/media/logo.png":["image/png","media/logo.png"]
+	"/media/logo.png":["image/png","media/logo.png"],
+	"/todos":["text/html","form2.html"]
 }
 
 function onRequest(req,res){
@@ -33,12 +34,20 @@ function onRequest(req,res){
 	}
 }
 
-app.get("/todos", function (req, res) {
-	console.log("todos requested!");
-	res.json(todos);
+app.post("/addTodo", function (request, response) {
+
+	var id = request.body.id;
+	console.log(request.body.id);
+	var task = request.body.task;
+	var date = request.body.date;
+	var time = request.body.time;
+	var important = request.body.important;
+	var note = request.body.note;
+
+	res.send(id,task,date,time,important,note);
 });
 
-var todosText = base + "todos.txt"
+var todosText = base + "todos.json";
 
 fs.watch(todosText, function () {
 	console.log("File changed!");
