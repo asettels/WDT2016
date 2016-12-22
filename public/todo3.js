@@ -15,7 +15,13 @@ function ToDo(id, task,date, time, important,note){
 
 	this.makeElement = function(onDelete, onEdit){
 		//make list
+		var today = new Date();
+		if(today.getTime() > this.date.getTime){
+			var $li = $('<li class="overdue"></li>').attr('id', 'task_' + self.id);
+		}
+		else{
 		var $li = $('<li></li>').attr('id', 'task_' + self.id);
+		}
 		var $cb = $('<input type = "checkbox">');
 		$cb.change(function(){
 			self.done=($(this).is(":checked"));
@@ -67,7 +73,7 @@ function ToDoList(){
 		// var json = JSON.stringify(self.tasks);
 		// $.post("/addTodo", json);
 
-	
+
 	}
 	self.delete = function(todoloo){
 		var index = self.tasks.indexOf(todoloo);
@@ -103,7 +109,7 @@ $(function(){
 		var data = new FormData(this);
 
 		var todo = new ToDo(newId, data.get("task"), data.get("date"), data.get("time"), data.get("important")==='on', data.get("note"));
-		
+
 		$.post({
 			url: '/addTodo',
 			data: {
@@ -168,4 +174,3 @@ $(function(){
 });
 
 });
-
